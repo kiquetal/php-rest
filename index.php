@@ -21,6 +21,7 @@ for ($i=0;$i<10;$i++)
 {
  $valores[]=array('id'=>rand()*10+1,'name'=>'algo');
 }
+
 $app->get('/items',function() use ($app,$valores)
  {
 
@@ -30,7 +31,7 @@ $app->get('/items',function() use ($app,$valores)
 
 });
 
-$app->post('/items',function()use ($app)
+$app->post('/items',function() use ($app)
 {
  $body=$app->request->getBody(); 
  $object_body=json_decode($body,true);
@@ -40,6 +41,14 @@ $app->post('/items',function()use ($app)
 
 
 
+});
+
+$app->get('/skills',function() use($app)
+{
+ $skills=R::getAll('select * from skills');
+ $app->response->headers->set('Content-Type','application/json');
+ $app->response->setStatus(200);
+ echo json_encode($skills,true);
 });
 
 $app->get('/users',function() use ($app)
